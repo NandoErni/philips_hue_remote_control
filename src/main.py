@@ -15,6 +15,7 @@ while True:
 
     if buttonPress and not flagging:
         state = not state
+        apiRepository.setLightsToGroup(1,state)
 
     flagging = buttonPress
 
