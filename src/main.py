@@ -1,4 +1,4 @@
 import apiRepository
 
-print(apiRepository.getGroups())
+print(apiRepository.getGroups().json())
 print('done!')
