@@ -31,6 +31,7 @@ def setBrightnessToGroup(group, brightness):
 
 
 def dimGroup(group):
+    print("dimming!")
     r = httpGet(getGroupEndpoint(group))
     brightness = r.json()["action"]["bri"]
     return httpPut(getGroupActionEndpoint(group), {'bri': brightness-DIM_STEP})
