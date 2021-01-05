@@ -26,8 +26,8 @@ def setBrightnessToGroup(group, brightness):
     return httpPut(getGroupActionEndpoint(group), {'bri': getCorrectBrightness(brightness)})
 
 
-def dimGroup(group):
-    print("dimming!")
+def dimGroupDown(group):
+    print("dimming down!")
     r = httpGet(getGroupEndpoint(group))
     brightness = r.json()["action"]["bri"]
 
@@ -37,12 +37,25 @@ def dimGroup(group):
     return setBrightnessToGroup(group, brightness - DIM_STEP)
 
 
+def dimGroupUp(group):
+    print("dimming up!")
+    r = httpGet(getGroupEndpoint(group))
+    brightness = r.json()["action"]["bri"]
+
+    if brightness == MAX_BRIGHTNESS:
+        return None
+
+    return setBrightnessToGroup(group, brightness + DIM_STEP)
+
+
 def isHueAvailable():
     r = httpGet(getApiEndpoint())
 
     if r is not None and r.status_code == 200:
+        print("Hue is available!")
         return True
 
+    print("Hue is not available!")
     return False
 
 

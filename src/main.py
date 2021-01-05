@@ -6,6 +6,17 @@ gpio = gpioRepository.GPIORepository()
 
 gpio.initGPIO()
 
+currentGroup = 1
+
 while True:
     if gpio.isButtonBrightnessUpFlag():
-        apiRepository.dimGroup(1)
+        apiRepository.dimGroupUp(currentGroup)
+
+    if gpio.isButtonBrightnessDownFlag():
+        apiRepository.dimGroupDown(currentGroup)
+
+    if gpio.isButtonToggleOnFlag():
+        apiRepository.toggleGroup(currentGroup)
+
+    if gpio.isButtonConnectionFlag():
+        apiRepository.isHueAvailable()
