@@ -5,7 +5,6 @@ import time
 
 MAX_BRIGHTNESS = 254
 MIN_BRIGHTNESS = 1
-DIM_STEP = 10
 SYSTEM_LATENCY = 0.05
 
 
@@ -24,7 +23,7 @@ def toggleGroup(group):
 
 
 def setBrightnessToGroup(group, brightness):
-    return httpPut(getGroupActionEndpoint(group), {'bri': getCorrectBrightness(brightness)})
+    return httpPut(getGroupActionEndpoint(group), {'bri': getCorrectBrightness(brightness), 'on': True})
 
 
 def dimGroupDown(group):
@@ -35,7 +34,7 @@ def dimGroupDown(group):
     if brightness == MIN_BRIGHTNESS:
         return None
 
-    return setBrightnessToGroup(group, brightness - DIM_STEP)
+    return setBrightnessToGroup(group, brightness - config.DIM_STEP)
 
 
 def dimGroupUp(group):
@@ -46,7 +45,7 @@ def dimGroupUp(group):
     if brightness == MAX_BRIGHTNESS:
         return None
 
-    return setBrightnessToGroup(group, brightness + DIM_STEP)
+    return setBrightnessToGroup(group, brightness + config.DIM_STEP)
 
 
 def isHueAvailable():
