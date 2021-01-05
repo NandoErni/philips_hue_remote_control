@@ -18,8 +18,9 @@ def setLightsToGroup(group, state):
 
 
 def toggleGroup(group):
-    r = httpGet(getGroupActionEndpoint(group))
-    return setLightsToGroup(group, r.json()["on"])
+    r = httpGet(getGroupEndpoint(group))
+    state = not r.json()["action"]["on"]
+    return setLightsToGroup(group, state)
 
 
 def setBrightnessToGroup(group, brightness):
