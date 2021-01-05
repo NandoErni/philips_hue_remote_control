@@ -31,8 +31,8 @@ def setBrightnessToGroup(group, brightness):
 
 
 def dimGroup(group):
-    r = httpGet(getGroupActionEndpoint(group))
-    brightness = r.json()["bri"]
+    r = httpGet(getGroupEndpoint(group))
+    brightness = r.json()["action"]["bri"]
     return httpPut(getGroupActionEndpoint(group), {'bri': brightness-DIM_STEP})
 
 
@@ -64,7 +64,11 @@ def getApiEndpoint():
 
 
 def getGroupActionEndpoint(group):
-    return getApiEndpoint() + config.GROUPS_DIR + str(group) + '/' + config.GROUP_ACTION_DIR
+    return getGroupEndpoint(group) + config.GROUP_ACTION_DIR
+
+
+def getGroupEndpoint(group):
+    return getApiEndpoint() + config.GROUPS_DIR + str(group) + '/'
 
 
 def getLightsEndpoint():
