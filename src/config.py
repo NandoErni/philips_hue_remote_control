@@ -1,3 +1,4 @@
+# API
 PHILIPS_HUE_URL = 'http://192.168.1.128/'
 USERNAME = 'INSERTSMTH'
 GROUPS_DIR = 'groups/'
@@ -5,13 +6,9 @@ GROUP_ACTION_DIR = 'action/'
 LIGHTS_DIR = 'lights/'
 
 
-def getApiEndpoint():
-    return PHILIPS_HUE_URL + 'api/' + USERNAME + '/'
+# RASPBERRY PI GPIO
+GPIO_BUTTON_ON = 27
+GPIO_BUTTON_BRIGHTNESS_UP = 17
 
 
-def getGroupActionEndpoint(group):
-    return getApiEndpoint() + GROUPS_DIR + str(group) + '/' + GROUP_ACTION_DIR
 
-
-def getLightsEndpoint():
-    return getApiEndpoint() + LIGHTS_DIR
