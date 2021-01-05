@@ -21,20 +21,14 @@ def toggleGroup(group):
 
 
 def setBrightnessToGroup(group, brightness):
-    if brightness > MAX_BRIGHTNESS:
-        brightness = MAX_BRIGHTNESS
-
-    if brightness < MIN_BRIGHTNESS:
-        brightness = MIN_BRIGHTNESS
-
-    return httpPut(getGroupActionEndpoint(group), {'bri': brightness})
+    return httpPut(getGroupActionEndpoint(group), {'bri': getCorrectBrightness(brightness)})
 
 
 def dimGroup(group):
     print("dimming!")
     r = httpGet(getGroupEndpoint(group))
     brightness = r.json()["action"]["bri"]
-    return httpPut(getGroupActionEndpoint(group), {'bri': brightness-DIM_STEP})
+    return setBrightnessToGroup(group, brightness - DIM_STEP)
 
 
 def isHueAvailable():
@@ -74,3 +68,13 @@ def getGroupEndpoint(group):
 
 def getLightsEndpoint():
     return getApiEndpoint() + config.LIGHTS_DIR
+
+
+def getCorrectBrightness(brightness):
+    if brightness < MIN_BRIGHTNESS:
+        return MIN_BRIGHTNESS
+
+    if brightness > MAX_BRIGHTNESS:
+        return MAX_BRIGHTNESS
+
+    return brightness
