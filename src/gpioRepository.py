@@ -23,11 +23,9 @@ class GPIORepository:
 
     def isButtonBrightnessUpFlag(self):
         if not GPIO.input(config.GPIO_BUTTON_BRIGHTNESS_UP):
-            if not self.buttonBrightnessUp:
-                self.buttonBrightnessUp = True
-                print("dim button press!")
-                return True
-            else:
-                return False
+            self.buttonBrightnessUp = True
+            print("dim button press!")
+            return True
+
         self.buttonBrightnessUp = False
         return False

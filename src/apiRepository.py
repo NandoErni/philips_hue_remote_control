@@ -5,7 +5,7 @@ import time
 
 MAX_BRIGHTNESS = 254
 MIN_BRIGHTNESS = 1
-DIM_STEP = 10
+DIM_STEP = 1
 SYSTEM_LATENCY = 0.05
 
 
@@ -30,6 +30,10 @@ def dimGroup(group):
     print("dimming!")
     r = httpGet(getGroupEndpoint(group))
     brightness = r.json()["action"]["bri"]
+
+    if brightness == MIN_BRIGHTNESS:
+        return None
+
     return setBrightnessToGroup(group, brightness - DIM_STEP)
 
 
