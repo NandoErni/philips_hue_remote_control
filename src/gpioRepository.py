@@ -9,6 +9,7 @@ class GPIORepository:
         self.dispose()
         GPIO.setmode(GPIO.BCM)
         GPIO.setup(config.GPIO_BUTTON_ON, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+        GPIO.setup(config.GPIO_BUTTON_BRIGHTNESS_UP, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
     def dispose(self):
         GPIO.cleanup()
