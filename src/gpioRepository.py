@@ -1,5 +1,5 @@
 import RPi.GPIO as GPIO
-from src import config
+import config
 
 
 class GPIORepository:

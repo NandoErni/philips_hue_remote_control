@@ -1,5 +1,5 @@
 import requests
-from src import config
+import config
 import json
 
 MAX_BRIGHTNESS = 254
