@@ -45,7 +45,7 @@ def isHueAvailable():
 def httpPut(url, jsonData):
     try:
         r = requests.put(url, json.dumps(jsonData))
-        time.sleep(SYSTEM_LATENCY)
+        #time.sleep(SYSTEM_LATENCY)
         return r
     except:
         return None
@@ -54,7 +54,7 @@ def httpPut(url, jsonData):
 def httpGet(url):
     try:
         r = requests.get(url)
-        time.sleep(SYSTEM_LATENCY)
+        #time.sleep(SYSTEM_LATENCY)
         return r
     except:
         return None
