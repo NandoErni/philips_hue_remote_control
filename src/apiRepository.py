@@ -1,10 +1,12 @@
 import requests
 import config
 import json
+import time
 
 MAX_BRIGHTNESS = 254
 MIN_BRIGHTNESS = 1
 DIM_STEP = 10
+SYSTEM_LATENCY = 0.05
 
 
 def getGroups():
@@ -42,14 +44,18 @@ def isHueAvailable():
 
 def httpPut(url, jsonData):
     try:
-        return requests.put(url, json.dumps(jsonData))
+        r = requests.put(url, json.dumps(jsonData))
+        time.sleep(SYSTEM_LATENCY)
+        return r
     except:
         return None
 
 
 def httpGet(url):
     try:
-        return requests.get(url)
+        r = requests.get(url)
+        time.sleep(SYSTEM_LATENCY)
+        return r
     except:
         return None
 
