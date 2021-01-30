@@ -23,59 +23,39 @@ class GPIORepository:
         GPIO.cleanup()
 
     def isButtonBrightnessUpFlag(self):
-        if not GPIO.input(config.GPIO_BUTTON_BRIGHTNESS_UP):
-            if not self.buttonBrightnessUp:
-                self.buttonBrightnessUp = True
-                print("Dim Up Button!")
-                return True
-            else:
-                return False
-        self.buttonBrightnessUp = False
-        return False
+        return self.isButtonFlag(config.GPIO_BUTTON_CONNECTION, 0, "Dim Up Button!")
 
     def isButtonBrightnessDownFlag(self):
-        if not GPIO.input(config.GPIO_BUTTON_BRIGHTNESS_DOWN):
-            if not self.buttonBrightnessDown:
-                self.buttonBrightnessDown = True
-                print("Dim Down Button!")
-                return True
-            else:
-                return False
-        self.buttonBrightnessDown = False
-        return False
+        return self.isButtonFlag(config.GPIO_BUTTON_CONNECTION, 2, "Dim Down Button!")
 
     def isButtonToggleOnFlag(self):
-        if not GPIO.input(config.GPIO_BUTTON_ON):
-            if not self.buttonToggleOn:
-                self.buttonToggleOn = True
-                print("Toggle On/Off!")
-                return True
-            else:
-                return False
-        self.buttonToggleOn = False
-        return False
+        return self.isButtonFlag(config.GPIO_BUTTON_CONNECTION, 2, "Toggle On/Off!")
 
     def isButtonConnectionFlag(self):
-        if not GPIO.input(config.GPIO_BUTTON_CONNECTION):
-            if not self.buttonConnection:
-                self.buttonConnection = True
-                print("Checking connection...")
-                return True
-            else:
-                return False
-        self.buttonConnection = False
-        return False
+        return self.isButtonFlag(config.GPIO_BUTTON_CONNECTION, 3, "Checking connection...")
 
-    def testConnect(self):
-        return self.isButtonFlag(config.GPIO_BUTTON_CONNECTION, self.buttonConnection)
+    def isButtonPresetOneFlag(self):
+        return self.isButtonFlag(config.GPIO_BUTTON_CONNECTION, 4, "Preset One!")
 
-    def isButtonFlag(self, gpio_button, gpio_button_flag_index):
+    def isButtonPresetTwoFlag(self):
+        return self.isButtonFlag(config.GPIO_BUTTON_CONNECTION, 5, "Preset Two!")
+
+    def isButtonPresetThreeFlag(self):
+        return self.isButtonFlag(config.GPIO_BUTTON_CONNECTION, 6, "Preset Three!")
+
+    def isButtonNextFlag(self):
+        return self.isButtonFlag(config.GPIO_BUTTON_CONNECTION, 7, "Next Value...")
+
+    def isButtonPreviousFlag(self):
+        return self.isButtonFlag(config.GPIO_BUTTON_CONNECTION, 8, "Previous Value...")
+
+    def isButtonFlag(self, gpio_button, gpio_button_flag_index, outputString):
         if not GPIO.input(gpio_button):
-            if not self.buttonFlags[0]:
-                self.buttonFlags[0] = True
-                print("Checking connection...")
+            if not self.buttonFlags[gpio_button_flag_index]:
+                self.buttonFlags[gpio_button_flag_index] = True
+                print(outputString)
                 return True
             else:
                 return False
-        self.buttonFlags[0] = False
+        self.buttonFlags[gpio_button_flag_index] = False
         return False
