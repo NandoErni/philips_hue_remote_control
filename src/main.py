@@ -18,5 +18,6 @@ while True:
     if gpio.isButtonToggleOnFlag():
         apiRepository.toggleGroup(currentGroup)
 
-    if gpio.isButtonConnectionFlag():
+    #if gpio.isButtonConnectionFlag():
+    if gpio.testConnect():
         apiRepository.isHueAvailable()

@@ -12,6 +12,11 @@ class GPIORepository:
         GPIO.setup(config.GPIO_BUTTON_BRIGHTNESS_UP, GPIO.IN, pull_up_down=GPIO.PUD_UP)
         GPIO.setup(config.GPIO_BUTTON_BRIGHTNESS_DOWN, GPIO.IN, pull_up_down=GPIO.PUD_UP)
         GPIO.setup(config.GPIO_BUTTON_CONNECTION, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+        GPIO.setup(config.GPIO_BUTTON_PRESET_ONE, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+        GPIO.setup(config.GPIO_BUTTON_PRESET_TWO, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+        GPIO.setup(config.GPIO_BUTTON_PRESET_THREE, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+        GPIO.setup(config.GPIO_BUTTON_NEXT, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+        GPIO.setup(config.GPIO_BUTTON_PREVIOUS, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
     def dispose(self):
         GPIO.cleanup()
@@ -20,7 +25,7 @@ class GPIORepository:
         if not GPIO.input(config.GPIO_BUTTON_BRIGHTNESS_UP):
             if not self.buttonBrightnessUp:
                 self.buttonBrightnessUp = True
-                print("Dim Button Up!")
+                print("Dim Up Button!")
                 return True
             else:
                 return False
@@ -31,7 +36,7 @@ class GPIORepository:
         if not GPIO.input(config.GPIO_BUTTON_BRIGHTNESS_DOWN):
             if not self.buttonBrightnessDown:
                 self.buttonBrightnessDown = True
-                print("Dim Button Down!")
+                print("Dim Down Button!")
                 return True
             else:
                 return False
@@ -58,4 +63,18 @@ class GPIORepository:
             else:
                 return False
         self.buttonConnection = False
+        return False
+
+    def testConnect(self):
+        return self.isButtonFlag(config.GPIO_BUTTON_CONNECTION, self.buttonConnection)
+
+    def isButtonFlag(self, gpio_button, gpio_button_flag):
+        if not GPIO.input(gpio_button):
+            if not gpio_button_flag:
+                gpio_button_flag = True
+                print("Checking connection...")
+                return True
+            else:
+                return False
+        gpio_button_flag = False
         return False
