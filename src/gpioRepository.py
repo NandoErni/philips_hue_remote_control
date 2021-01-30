@@ -26,7 +26,7 @@ class GPIORepository:
         return self.isButtonFlag(config.GPIO_BUTTON_CONNECTION, 0, "Dim Up Button!")
 
     def isButtonBrightnessDownFlag(self):
-        return self.isButtonFlag(config.GPIO_BUTTON_CONNECTION, 2, "Dim Down Button!")
+        return self.isButtonFlag(config.GPIO_BUTTON_CONNECTION, 1, "Dim Down Button!")
 
     def isButtonToggleOnFlag(self):
         return self.isButtonFlag(config.GPIO_BUTTON_CONNECTION, 2, "Toggle On/Off!")
