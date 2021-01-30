@@ -21,8 +21,17 @@ while True:
     if gpio.isButtonConnectionFlag():
         apiRepository.isHueAvailable()
 
-    gpio.isButtonPresetOneFlag()
-    gpio.isButtonPresetTwoFlag()
-    gpio.isButtonPresetThreeFlag()
-    gpio.isButtonNextFlag()
-    gpio.isButtonPreviousFlag()
+    if gpio.isButtonPresetOneFlag():
+        apiRepository.applySceneBright(currentGroup)
+
+    if gpio.isButtonPresetTwoFlag():
+        apiRepository.applySceneDimmed(currentGroup)
+
+    if gpio.isButtonPresetThreeFlag():
+        apiRepository.applySceneNightlight(currentGroup)
+
+    if gpio.isButtonNextFlag():
+        continue
+
+    if gpio.isButtonPreviousFlag():
+        continue

@@ -12,14 +12,14 @@ def getGroups():
     return httpGet(getApiEndpoint() + config.GROUPS_DIR)
 
 
-def setLightsToGroup(group, state):
+def setOnStateToGroup(group, state):
     return httpPut(getGroupActionEndpoint(group), {'on': state})
 
 
 def toggleGroup(group):
     r = httpGet(getGroupEndpoint(group))
     state = not r.json()["action"]["on"]
-    return setLightsToGroup(group, state)
+    return setOnStateToGroup(group, state)
 
 
 def setBrightnessToGroup(group, brightness):
@@ -57,6 +57,18 @@ def isHueAvailable():
 
     print("Hue is not available!")
     return False
+
+
+def applySceneBright(group):
+    return httpPut(getGroupActionEndpoint(group), {'scene': config.SCENE_BRIGHT})
+
+
+def applySceneDimmed(group):
+    return httpPut(getGroupActionEndpoint(group), {'scene': config.SCENE_DIMMED})
+
+
+def applySceneNightlight(group):
+    return httpPut(getGroupActionEndpoint(group), {'scene': config.SCENE_NIGHTLIGHT})
 
 
 def httpPut(url, jsonData):
