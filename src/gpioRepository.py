@@ -3,6 +3,7 @@ import config
 
 
 class GPIORepository:
+    buttonFlags = [False, False, False, False, False, False, False, False, False]
     buttonToggleOn = buttonBrightnessUp = buttonBrightnessDown = buttonConnection = False
 
     def initGPIO(self):
@@ -68,13 +69,13 @@ class GPIORepository:
     def testConnect(self):
         return self.isButtonFlag(config.GPIO_BUTTON_CONNECTION, self.buttonConnection)
 
-    def isButtonFlag(self, gpio_button, gpio_button_flag):
+    def isButtonFlag(self, gpio_button, gpio_button_flag_index):
         if not GPIO.input(gpio_button):
-            if not gpio_button_flag:
-                gpio_button_flag = True
+            if not self.buttonFlags[0]:
+                self.buttonFlags[0] = True
                 print("Checking connection...")
                 return True
             else:
                 return False
-        gpio_button_flag = False
+        self.buttonFlags[0] = False
         return False
