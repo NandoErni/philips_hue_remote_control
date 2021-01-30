@@ -23,31 +23,31 @@ class GPIORepository:
         GPIO.cleanup()
 
     def isButtonBrightnessUpFlag(self):
-        return self.isButtonFlag(config.GPIO_BUTTON_CONNECTION, 0, "Dim Up Button!")
+        return self.isButtonFlag(config.GPIO_BUTTON_BRIGHTNESS_UP, 0, "Dim Up Button!")
 
     def isButtonBrightnessDownFlag(self):
-        return self.isButtonFlag(config.GPIO_BUTTON_CONNECTION, 1, "Dim Down Button!")
+        return self.isButtonFlag(config.GPIO_BUTTON_BRIGHTNESS_DOWN, 1, "Dim Down Button!")
 
     def isButtonToggleOnFlag(self):
-        return self.isButtonFlag(config.GPIO_BUTTON_CONNECTION, 2, "Toggle On/Off!")
+        return self.isButtonFlag(config.GPIO_BUTTON_ON, 2, "Toggle On/Off!")
 
     def isButtonConnectionFlag(self):
         return self.isButtonFlag(config.GPIO_BUTTON_CONNECTION, 3, "Checking connection...")
 
     def isButtonPresetOneFlag(self):
-        return self.isButtonFlag(config.GPIO_BUTTON_CONNECTION, 4, "Preset One!")
+        return self.isButtonFlag(config.GPIO_BUTTON_PRESET_ONE, 4, "Preset One!")
 
     def isButtonPresetTwoFlag(self):
-        return self.isButtonFlag(config.GPIO_BUTTON_CONNECTION, 5, "Preset Two!")
+        return self.isButtonFlag(config.GPIO_BUTTON_PRESET_TWO, 5, "Preset Two!")
 
     def isButtonPresetThreeFlag(self):
-        return self.isButtonFlag(config.GPIO_BUTTON_CONNECTION, 6, "Preset Three!")
+        return self.isButtonFlag(config.GPIO_BUTTON_PRESET_THREE, 6, "Preset Three!")
 
     def isButtonNextFlag(self):
-        return self.isButtonFlag(config.GPIO_BUTTON_CONNECTION, 7, "Next Value...")
+        return self.isButtonFlag(config.GPIO_BUTTON_NEXT, 7, "Next Value...")
 
     def isButtonPreviousFlag(self):
-        return self.isButtonFlag(config.GPIO_BUTTON_CONNECTION, 8, "Previous Value...")
+        return self.isButtonFlag(config.GPIO_BUTTON_PREVIOUS, 8, "Previous Value...")
 
     def isButtonFlag(self, gpio_button, gpio_button_flag_index, outputString):
         if not GPIO.input(gpio_button):
