@@ -21,8 +21,8 @@ while True:
     if gpio.isButtonConnectionFlag():
         apiRepository.isHueAvailable()
 
-    print(gpio.isButtonPresetOneFlag())
-    print(gpio.isButtonPresetTwoFlag())
-    print(gpio.isButtonPresetThreeFlag())
-    print(gpio.isButtonNextFlag())
-    print(gpio.isButtonPreviousFlag())
+    gpio.isButtonPresetOneFlag()
+    gpio.isButtonPresetTwoFlag()
+    gpio.isButtonPresetThreeFlag()
+    gpio.isButtonNextFlag()
+    gpio.isButtonPreviousFlag()
