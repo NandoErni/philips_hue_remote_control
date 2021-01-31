@@ -22,7 +22,7 @@ class APIRepository:
 
     def toggleLight(self, light):
         r = self.httpGet(self.getLightEndpoint(light))
-        state = not r.json()["state"]["on"]
+        state = not r.json()[0]["on"]
         return self.setOnStateToLight(light, state)
 
     def setBrightnessToGroup(self, group, brightness):
