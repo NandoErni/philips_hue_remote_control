@@ -28,6 +28,7 @@ class I2cRepository:
     def writeText(self, text):
         (font_width, font_height) = self.font.getsize(text)
 
+        self.clear()
         self.draw.text(
             (self.oled.width / 2 - font_width / 2, 0),
             text,
@@ -35,6 +36,5 @@ class I2cRepository:
             fill=255,
         )
 
-        self.clear()
         self.oled.image(self.image.rotate(180))
         self.oled.show()
