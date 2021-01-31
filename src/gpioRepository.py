@@ -1,5 +1,6 @@
 import RPi.GPIO as GPIO
 import config
+import time
 
 
 class GPIORepository:
@@ -66,3 +67,9 @@ class GPIORepository:
 
         self.buttonFlags[gpio_button_flag_index] = False
         return False
+
+    @staticmethod
+    def turnOnLight(duration):
+        GPIO.output(config.GPIO_LED_CONNECT, GPIO.HIGH)
+        time.sleep(duration)
+        GPIO.output(config.GPIO_LED_CONNECT, GPIO.LOW)

@@ -74,6 +74,7 @@ while True:
     if gpio.isButtonConnectionFlag():
         api.isHueAvailable()
         api.getCurrentReceivers()
+        gpio.turnOnLight(2)
 
     if gpio.isButtonPresetOneFlag():
         if isCurrentReceiverLight():
