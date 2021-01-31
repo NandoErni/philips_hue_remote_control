@@ -1,6 +1,5 @@
 import RPi.GPIO as GPIO
 import config
-import time
 
 
 class GPIORepository:
@@ -61,7 +60,6 @@ class GPIORepository:
             if not self.buttonFlags[gpio_button_flag_index]:
                 self.buttonFlags[gpio_button_flag_index] = True
                 print(outputString)
-                time.sleep(0.05)
                 return True
             else:
                 return False

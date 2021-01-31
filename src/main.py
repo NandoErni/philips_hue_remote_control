@@ -1,5 +1,6 @@
 import apiRepository
 import gpioRepository
+import time
 
 print("Remote Control is now starting...")
 gpio = gpioRepository.GPIORepository()
@@ -38,6 +39,7 @@ currentReceiverIndex = 0
 changeToNextGroup()
 
 while True:
+    time.sleep(0.1)
     if gpio.isButtonBrightnessUpFlag():
         if isCurrentReceiverLight():
             api.dimLightUp(getCurrentReceiverNumber())
