@@ -1,5 +1,6 @@
 import RPi.GPIO as GPIO
 import config
+import time
 
 
 class GPIORepository:
@@ -9,18 +10,23 @@ class GPIORepository:
     def initGPIO(self):
         self.dispose()
         GPIO.setmode(GPIO.BCM)
-        GPIO.setup(config.GPIO_BUTTON_ON, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-        GPIO.setup(config.GPIO_BUTTON_BRIGHTNESS_UP, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-        GPIO.setup(config.GPIO_BUTTON_BRIGHTNESS_DOWN, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-        GPIO.setup(config.GPIO_BUTTON_CONNECTION, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-        GPIO.setup(config.GPIO_BUTTON_PRESET_ONE, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-        GPIO.setup(config.GPIO_BUTTON_PRESET_TWO, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-        GPIO.setup(config.GPIO_BUTTON_PRESET_THREE, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-        GPIO.setup(config.GPIO_BUTTON_NEXT, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-        GPIO.setup(config.GPIO_BUTTON_PREVIOUS, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+        self.setupBtn(config.GPIO_BUTTON_ON)
+        self.setupBtn(config.GPIO_BUTTON_BRIGHTNESS_UP)
+        self.setupBtn(config.GPIO_BUTTON_BRIGHTNESS_DOWN)
+        self.setupBtn(config.GPIO_BUTTON_CONNECTION)
+        self.setupBtn(config.GPIO_BUTTON_PRESET_ONE)
+        self.setupBtn(config.GPIO_BUTTON_PRESET_TWO)
+        self.setupBtn(config.GPIO_BUTTON_PRESET_THREE)
+        self.setupBtn(config.GPIO_BUTTON_NEXT)
+        self.setupBtn(config.GPIO_BUTTON_PREVIOUS)
         GPIO.setup(config.GPIO_LED_CONNECT, GPIO.OUT)
 
-    def dispose(self):
+    @staticmethod
+    def setupBtn(button):
+        GPIO.setup(button, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+
+    @staticmethod
+    def dispose():
         GPIO.cleanup()
 
     def isButtonBrightnessUpFlag(self):
@@ -55,8 +61,10 @@ class GPIORepository:
             if not self.buttonFlags[gpio_button_flag_index]:
                 self.buttonFlags[gpio_button_flag_index] = True
                 print(outputString)
+                time.sleep(0.001)
                 return True
             else:
                 return False
+
         self.buttonFlags[gpio_button_flag_index] = False
         return False
