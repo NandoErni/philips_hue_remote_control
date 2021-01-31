@@ -18,6 +18,7 @@ class GPIORepository:
         GPIO.setup(config.GPIO_BUTTON_PRESET_THREE, GPIO.IN, pull_up_down=GPIO.PUD_UP)
         GPIO.setup(config.GPIO_BUTTON_NEXT, GPIO.IN, pull_up_down=GPIO.PUD_UP)
         GPIO.setup(config.GPIO_BUTTON_PREVIOUS, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+        GPIO.setup(config.GPIO_LED_CONNECT, GPIO.OUT)
 
     def dispose(self):
         GPIO.cleanup()

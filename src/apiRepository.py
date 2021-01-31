@@ -49,6 +49,30 @@ class APIRepository:
 
         return self.setBrightnessToGroup(group, brightness + config.DIM_STEP)
 
+    def setBrightnessToLight(self, light, brightness):
+        return self.httpPut(self.getLightStateEndpoint(light),
+                            {'bri': self.getCorrectBrightness(brightness), 'on': True})
+
+    def dimLightDown(self, light):
+        print("dimming down!")
+        r = self.httpGet(self.getLightEndpoint(light))
+        brightness = r.json()["state"]["bri"]
+
+        if brightness == self.MIN_BRIGHTNESS:
+            return None
+
+        return self.setBrightnessToLight(light, brightness - config.DIM_STEP)
+
+    def dimLightUp(self, light):
+        print("dimming up!")
+        r = self.httpGet(self.getLightEndpoint(light))
+        brightness = r.json()["state"]["bri"]
+
+        if brightness == self.MAX_BRIGHTNESS:
+            return None
+
+        return self.setBrightnessToLight(light, brightness + config.DIM_STEP)
+
     def isHueAvailable(self):
         r = self.httpGet(self.getApiEndpoint())
 

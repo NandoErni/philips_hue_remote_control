@@ -1,6 +1,7 @@
 import apiRepository
 import gpioRepository
 
+print("Remote Control is now starting...")
 gpio = gpioRepository.GPIORepository()
 api = apiRepository.APIRepository()
 
@@ -24,15 +25,30 @@ def isCurrentReceiverLight():
     return receivers[currentReceiverIndex][0] == "l"
 
 
+def changeToNextGroup():
+    global currentReceiverIndex, receivers
+    if isCurrentReceiverLight():
+        changeReceiver(1)
+        changeToNextGroup()
+
+
 receivers = api.getCurrentReceivers()
 currentReceiverIndex = 0
 
+changeToNextGroup()
+
 while True:
     if gpio.isButtonBrightnessUpFlag():
-        api.dimGroupUp(getCurrentReceiverNumber())
+        if isCurrentReceiverLight():
+            api.dimLightUp(getCurrentReceiverNumber())
+        else:
+            api.dimGroupUp(getCurrentReceiverNumber())
 
     if gpio.isButtonBrightnessDownFlag():
-        api.dimGroupDown(getCurrentReceiverNumber())
+        if isCurrentReceiverLight():
+            api.dimLightDown(getCurrentReceiverNumber())
+        else:
+            api.dimGroupDown(getCurrentReceiverNumber())
 
     if gpio.isButtonToggleOnFlag():
         if isCurrentReceiverLight():

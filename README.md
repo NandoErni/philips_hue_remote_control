@@ -15,3 +15,6 @@ In order to make this work install the following packages:
 ```console
 pi@raspberry:~$ python3 ./main.py
 ```
+
+### GPIO Configuration
+The GPIO configuration can be found in the ```config.py``` file
