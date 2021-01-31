@@ -31,6 +31,6 @@ class I2cRepository:
             font=self.font,
             fill=255,
         )
-
+        self.oled.fill(0)
         self.oled.image(self.image.rotate(180))
         self.oled.show()
