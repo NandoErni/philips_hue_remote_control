@@ -8,43 +8,53 @@ gpio.initGPIO()
 api.isHueAvailable()
 
 
-def setReceiver(receiver):
-    global currentReceiver, isCurrentReceiverLight
-    currentReceiver = int(receiver[1])
-    isCurrentReceiverLight = receiver[0] == "l"
+def changeReceiver(i):
+    global currentReceiverIndex, receivers
+    currentReceiverIndex = (currentReceiverIndex + i) % len(receivers)
+    print("The current receiver is " + receivers[currentReceiverIndex])
+
+
+def getCurrentReceiverNumber():
+    global currentReceiverIndex, receivers
+    return int(receivers[currentReceiverIndex])
+
+
+def isCurrentReceiverLight():
+    global receivers
+    return receivers[currentReceiverIndex][0] == "l"
 
 
 receivers = api.getCurrentReceivers()
-currentReceiver = 0
-isCurrentReceiverLight = True
-
-setReceiver(receivers[0])
+currentReceiverIndex = 0
 
 while True:
     if gpio.isButtonBrightnessUpFlag():
-        api.dimGroupUp(currentReceiver)
+        api.dimGroupUp(getCurrentReceiverNumber())
 
     if gpio.isButtonBrightnessDownFlag():
-        api.dimGroupDown(currentReceiver)
+        api.dimGroupDown(getCurrentReceiverNumber())
 
     if gpio.isButtonToggleOnFlag():
-        api.toggleGroup(currentReceiver)
+        if isCurrentReceiverLight():
+            api.toggleLight(getCurrentReceiverNumber())
+        else:
+            api.toggleGroup(getCurrentReceiverNumber())
 
     if gpio.isButtonConnectionFlag():
         api.isHueAvailable()
         api.getCurrentReceivers()
 
     if gpio.isButtonPresetOneFlag():
-        api.applySceneBright(currentReceiver)
+        api.applySceneBright(getCurrentReceiverNumber())
 
     if gpio.isButtonPresetTwoFlag():
-        api.applySceneDimmed(currentReceiver)
+        api.applySceneDimmed(getCurrentReceiverNumber())
 
     if gpio.isButtonPresetThreeFlag():
-        api.applySceneNightlight(currentReceiver)
+        api.applySceneNightlight(getCurrentReceiverNumber())
 
     if gpio.isButtonNextFlag():
-        continue
+        changeReceiver(1)
 
     if gpio.isButtonPreviousFlag():
-        continue
+        changeReceiver(-1)

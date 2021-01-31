@@ -12,10 +12,18 @@ class APIRepository:
     def setOnStateToGroup(self, group, state):
         return self.httpPut(self.getGroupActionEndpoint(group), {'on': state})
 
+    def setOnStateToLight(self, light, state):
+        return self.httpPut(self.getLightStateEndpoint(light), {'on': state})
+
     def toggleGroup(self, group):
         r = self.httpGet(self.getGroupEndpoint(group))
         state = not r.json()["action"]["on"]
         return self.setOnStateToGroup(group, state)
+
+    def toggleLight(self, light):
+        r = self.httpGet(self.getLightEndpoint(light))
+        state = not r.json()["state"]["on"]
+        return self.setOnStateToLight(light, state)
 
     def setBrightnessToGroup(self, group, brightness):
         return self.httpPut(self.getGroupActionEndpoint(group),
@@ -103,11 +111,17 @@ class APIRepository:
     def getGroupEndpoint(self, group):
         return self.getApiEndpoint() + config.GROUPS_DIR + str(group) + '/'
 
-    def getLightsEndpoint(self):
-        return self.getApiEndpoint() + config.LIGHTS_DIR
-
     def getGroupsEndpoint(self):
         return self.getApiEndpoint() + config.GROUPS_DIR
+
+    def getLightStateEndpoint(self, light):
+        return self.getLightEndpoint(light) + config.LIGHT_STATE_DIR
+
+    def getLightEndpoint(self, light):
+        return self.getApiEndpoint() + config.LIGHTS_DIR + str(light) + '/'
+
+    def getLightsEndpoint(self):
+        return self.getApiEndpoint() + config.LIGHTS_DIR
 
     def getCorrectBrightness(self, brightness):
         if brightness < self.MIN_BRIGHTNESS:
