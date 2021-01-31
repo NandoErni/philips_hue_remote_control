@@ -19,9 +19,9 @@ sudo apt install python3-rpi.gpio
 echo Installin I2C tools
 sudo apt-get install python-smbus i2c-tools git python-pil
 
-echo Installing adafruit I2C...
-sudo git clone https://github.com/adafruit/Adafruit_CircuitPython_SSD1306.git ./lib/adafruit/
-sudo python3 ./lib/adafruit/setup.py install
+echo Installing adafruit circuitpython ssd1306...
+sudo pip3 install adafruit-circuitpython-ssd1306
+sudo apt-get install python3-pil
 
 echo finished!
 echo ---------------------------------philips hue remote control---------------------------------
