@@ -18,7 +18,7 @@ class I2cRepository:
         self.oled.show()
 
         self.image = Image.new("1", (self.oled.width, self.oled.height))
-
+        self.image.rotate(180)
         self.draw = ImageDraw.Draw(self.image)
 
         self.font = ImageFont.truetype(config.STANDARD_FONT, config.STANDARD_FONT_SIZE)
