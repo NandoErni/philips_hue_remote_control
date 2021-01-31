@@ -1,10 +1,8 @@
 import RPi.GPIO as GPIO
 import config
-import time
 
 
 class GPIORepository:
-    SYSTEM_LATENCY = 0.05
     buttonFlags = [False, False, False, False, False, False, False, False, False]
     buttonToggleOn = buttonBrightnessUp = buttonBrightnessDown = buttonConnection = False
 
@@ -53,9 +51,7 @@ class GPIORepository:
         return self.isButtonFlag(config.GPIO_BUTTON_PREVIOUS, 8, "Previous Value...")
 
     def isButtonFlag(self, gpio_button, gpio_button_flag_index, outputString):
-        inputButton = GPIO.input(gpio_button)
-        time.sleep(self.SYSTEM_LATENCY)
-        if not inputButton:
+        if not GPIO.input(gpio_button):
             if not self.buttonFlags[gpio_button_flag_index]:
                 self.buttonFlags[gpio_button_flag_index] = True
                 print(outputString)
