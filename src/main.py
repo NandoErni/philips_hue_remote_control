@@ -16,10 +16,12 @@ display.initDisplay()
 display.writeText("Hello :)")
 time.sleep(3)
 
+
 def changeReceiver(i):
     global currentReceiverIndex, receivers
     currentReceiverIndex = (currentReceiverIndex + i) % len(receivers)
     print("The current receiver is " + receivers[currentReceiverIndex])
+    showCurrentReceiver()
 
 
 def getCurrentReceiverNumber():
@@ -29,7 +31,7 @@ def getCurrentReceiverNumber():
 
 def isCurrentReceiverLight():
     global receivers
-    return receivers[currentReceiverIndex][0] == "l"
+    return receivers[currentReceiverIndex][0] == "L"
 
 
 def changeToNextGroup():
@@ -39,10 +41,15 @@ def changeToNextGroup():
         changeToNextGroup()
 
 
+def showCurrentReceiver():
+    display.writeText(receivers[currentReceiverIndex])
+
+
 receivers = api.getCurrentReceivers()
 currentReceiverIndex = 0
 
 changeToNextGroup()
+showCurrentReceiver()
 
 while True:
     time.sleep(SYSTEM_LATENCY)

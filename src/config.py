@@ -26,6 +26,6 @@ GPIO_LED_CONNECT = 14
 
 # I2C
 STANDARD_FONT = "/usr/share/fonts/truetype/dejavu/39335_UniversCondensed.ttf"
-STANDARD_FONT_SIZE = 34
+STANDARD_FONT_SIZE = 32
 DISPLAY_WIDTH = 128
 DISPLAY_HEIGHT = 32
