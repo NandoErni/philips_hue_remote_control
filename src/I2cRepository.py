@@ -1,7 +1,7 @@
 import config
 import board
 import digitalio
-from Pillow import Image, ImageDraw, ImageFont
+from PIL import Image, ImageDraw, ImageFont
 import adafruit_ssd1306
 
 
