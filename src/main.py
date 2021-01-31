@@ -61,9 +61,11 @@ while True:
         api.getCurrentReceivers()
 
     if gpio.isButtonPresetOneFlag():
+        changeToNextGroup()
         api.applySceneBright(getCurrentReceiverNumber())
 
     if gpio.isButtonPresetTwoFlag():
+        changeToNextGroup()
         api.applySceneDimmed(getCurrentReceiverNumber())
 
     if gpio.isButtonPresetThreeFlag():
