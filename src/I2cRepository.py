@@ -22,6 +22,10 @@ class I2cRepository:
 
         self.font = ImageFont.truetype(config.STANDARD_FONT, config.STANDARD_FONT_SIZE)
 
+    def clear(self):
+        self.image = Image.new("1", (self.oled.width, self.oled.height)).rotate(90)
+        self.draw = ImageDraw.Draw(self.image)
+
     def writeText(self, text):
         (font_width, font_height) = self.font.getsize(text)
 
@@ -31,6 +35,6 @@ class I2cRepository:
             font=self.font,
             fill=255,
         )
-        self.oled.fill(0)
+        self.clear()
         self.oled.image(self.image.rotate(180))
         self.oled.show()
