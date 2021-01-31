@@ -1,15 +1,19 @@
 import apiRepository
 import gpioRepository
+import I2cRepository
 import time
 
 print("Remote Control is now starting...")
 SYSTEM_LATENCY = 0.1
 gpio = gpioRepository.GPIORepository()
 api = apiRepository.APIRepository()
+display = I2cRepository.I2cRepository()
 
 gpio.initGPIO()
 api.isHueAvailable()
+display.initDisplay()
 
+display.writeText("G8")
 
 def changeReceiver(i):
     global currentReceiverIndex, receivers
