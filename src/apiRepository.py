@@ -62,7 +62,7 @@ class APIRepository:
 
     def getCurrentReceivers(self):
         responseLights = self.httpGet(self.getLightsEndpoint())
-        responseGroups = self.httpGet(self.getGroups())
+        responseGroups = self.httpGet(self.getGroupsEndpoint())
         receivers = []
 
         for i in range(len(responseLights.json())):
@@ -106,8 +106,8 @@ class APIRepository:
     def getLightsEndpoint(self):
         return self.getApiEndpoint() + config.LIGHTS_DIR
 
-    def getGroups(self):
-        return self.httpGet(self.getApiEndpoint() + config.GROUPS_DIR)
+    def getGroupsEndpoint(self):
+        return self.getApiEndpoint() + config.GROUPS_DIR
 
     def getCorrectBrightness(self, brightness):
         if brightness < self.MIN_BRIGHTNESS:
