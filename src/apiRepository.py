@@ -17,11 +17,17 @@ class APIRepository:
 
     def toggleGroup(self, group):
         r = self.httpGet(self.getGroupEndpoint(group))
+        if r is None:
+            return None
+
         state = not r.json()["action"]["on"]
         return self.setOnStateToGroup(group, state)
 
     def toggleLight(self, light):
         r = self.httpGet(self.getLightEndpoint(light))
+        if r is None:
+            return None
+
         state = not r.json()["state"]["on"]
         return self.setOnStateToLight(light, state)
 
@@ -32,6 +38,9 @@ class APIRepository:
     def dimGroupDown(self, group):
         print("dimming down!")
         r = self.httpGet(self.getGroupEndpoint(group))
+        if r is None:
+            return None
+
         brightness = r.json()["action"]["bri"]
 
         if brightness == self.MIN_BRIGHTNESS:
@@ -42,6 +51,9 @@ class APIRepository:
     def dimGroupUp(self, group):
         print("dimming up!")
         r = self.httpGet(self.getGroupEndpoint(group))
+        if r is None:
+            return None
+
         brightness = r.json()["action"]["bri"]
 
         if brightness == self.MAX_BRIGHTNESS:
@@ -56,6 +68,9 @@ class APIRepository:
     def dimLightDown(self, light):
         print("dimming down!")
         r = self.httpGet(self.getLightEndpoint(light))
+        if r is None:
+            return None
+
         brightness = r.json()["state"]["bri"]
 
         if brightness == self.MIN_BRIGHTNESS:
@@ -66,6 +81,9 @@ class APIRepository:
     def dimLightUp(self, light):
         print("dimming up!")
         r = self.httpGet(self.getLightEndpoint(light))
+        if r is None:
+            return None
+
         brightness = r.json()["state"]["bri"]
 
         if brightness == self.MAX_BRIGHTNESS:
@@ -97,11 +115,13 @@ class APIRepository:
         responseGroups = self.httpGet(self.getGroupsEndpoint())
         receivers = []
 
-        for i in range(len(responseLights.json())):
-            receivers.append("L" + str(i+1))
+        if responseLights is not None:
+            for i in range(len(responseLights.json())):
+                receivers.append("L" + str(i+1))
 
-        for i in range(len(responseGroups.json())):
-            receivers.append("G" + str(i+1))
+        if responseGroups is not None:
+            for i in range(len(responseGroups.json())):
+                receivers.append("G" + str(i+1))
 
         print("All receivers:")
         for rec in receivers:
