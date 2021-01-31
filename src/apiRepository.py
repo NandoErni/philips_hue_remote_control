@@ -93,7 +93,8 @@ class APIRepository:
         except:
             return None
 
-    def getApiEndpoint(self):
+    @staticmethod
+    def getApiEndpoint():
         return config.PHILIPS_HUE_URL + 'api/' + config.USERNAME + '/'
 
     def getGroupActionEndpoint(self, group):
