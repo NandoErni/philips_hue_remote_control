@@ -14,11 +14,11 @@ def setReceiver(receiver):
     isCurrentReceiverLight = receiver[0] == "l"
 
 
-#receivers = api.getCurrentReceivers()
+receivers = api.getCurrentReceivers()
 currentReceiver = 0
 isCurrentReceiverLight = True
 
-#setReceiver(receivers[0])
+setReceiver(receivers[0])
 
 while True:
     if gpio.isButtonBrightnessUpFlag():
