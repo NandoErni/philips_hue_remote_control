@@ -53,8 +53,9 @@ class GPIORepository:
         return self.isButtonFlag(config.GPIO_BUTTON_PREVIOUS, 8, "Previous Value...")
 
     def isButtonFlag(self, gpio_button, gpio_button_flag_index, outputString):
+        inputButton = GPIO.input(gpio_button)
         time.sleep(self.SYSTEM_LATENCY)
-        if not GPIO.input(gpio_button):
+        if not inputButton:
             if not self.buttonFlags[gpio_button_flag_index]:
                 self.buttonFlags[gpio_button_flag_index] = True
                 print(outputString)
