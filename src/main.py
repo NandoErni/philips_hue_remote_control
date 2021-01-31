@@ -72,9 +72,13 @@ while True:
             api.toggleGroup(getCurrentReceiverNumber())
 
     if gpio.isButtonConnectionFlag():
-        api.isHueAvailable()
+        display.writeText("Connecting...")
+        if api.isHueAvailable():
+            display.writeText("Success!")
+        else:
+            display.writeText("Fail!")
         api.getCurrentReceivers()
-        gpio.turnOnLight(2)
+        time.sleep(2)
 
     if gpio.isButtonPresetOneFlag():
         if isCurrentReceiverLight():
