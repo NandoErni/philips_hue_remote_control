@@ -16,7 +16,7 @@ def changeReceiver(i):
 
 def getCurrentReceiverNumber():
     global currentReceiverIndex, receivers
-    return int(receivers[currentReceiverIndex])
+    return int(receivers[currentReceiverIndex][1])
 
 
 def isCurrentReceiverLight():
