@@ -23,7 +23,7 @@ class I2cRepository:
         self.font = ImageFont.truetype(config.STANDARD_FONT, config.STANDARD_FONT_SIZE)
 
     def clear(self):
-        self.draw.rectangle((0, 0, config.DISPLAY_HEIGHT, config.DISPLAY_WIDTH), fill=0)
+        self.draw.rectangle((0, 0, 300, 300), fill=0)
 
     def writeText(self, text):
         (font_width, font_height) = self.font.getsize(text)
