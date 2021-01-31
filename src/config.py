@@ -29,3 +29,4 @@ STANDARD_FONT = "/usr/share/fonts/truetype/dejavu/39335_UniversCondensed.ttf"
 STANDARD_FONT_SIZE = 35
 DISPLAY_WIDTH = 128
 DISPLAY_HEIGHT = 32
+DISPLAY_Y_OFFSET = -10
