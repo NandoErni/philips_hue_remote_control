@@ -10,6 +10,10 @@ In order to make this work install the following packages:
 - pip3 
 - requests
 - RPi.GPIO for python3
+- Adafruit_CircuitPython_SSD1306
+- Pillow
+
+For easy installation use the installation script ```install_prerequesites.sh```
 
 ### Run the script
 ```console

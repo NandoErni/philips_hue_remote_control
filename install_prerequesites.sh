@@ -20,5 +20,8 @@ echo Installing adafruit I2C...
 sudo git clone https://github.com/adafruit/Adafruit_CircuitPython_SSD1306.git ./lib/adafruit/
 sudo python3 ./lib/adafruit/setup.py install
 
+echo Installing Pillow
+python3 -m pip install Pillow
+
 echo finished!
 echo ---------------------------------philips hue remote control---------------------------------
