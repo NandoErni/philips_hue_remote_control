@@ -15,6 +15,11 @@ In order to make this work install the following packages:
 
 For easy installation use the installation script ```install_prerequesites.sh```
 
+You also have to enable I2C via 
+```console
+pi@raspberry:~$ sudo raspi-config
+```
+
 ### Run the script
 ```console
 pi@raspberry:~$ python3 ./main.py

@@ -11,17 +11,17 @@ echo Installing pip3...
 sudo apt-get -y install python3-pip
 
 echo Installing requests...
-pip3 install requests
+sudo pip3 install requests
 
 echo Installing RPi.GPIO for python3...
 sudo apt install python3-rpi.gpio
 
+echo Installin I2C tools
+sudo apt-get install python-smbus i2c-tools git python-pil
+
 echo Installing adafruit I2C...
 sudo git clone https://github.com/adafruit/Adafruit_CircuitPython_SSD1306.git ./lib/adafruit/
 sudo python3 ./lib/adafruit/setup.py install
-
-echo Installing Pillow
-python3 -m pip install Pillow
 
 echo finished!
 echo ---------------------------------philips hue remote control---------------------------------
