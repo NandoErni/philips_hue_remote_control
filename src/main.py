@@ -2,34 +2,46 @@ import apiRepository
 import gpioRepository
 
 gpio = gpioRepository.GPIORepository()
+api = apiRepository.APIRepository()
 
 gpio.initGPIO()
+api.isHueAvailable()
 
-currentGroup = 1
 
-apiRepository.isHueAvailable()
+def setReceiver(receiver):
+    global currentReceiver, isCurrentReceiverLight
+    currentReceiver = int(receiver[1])
+    isCurrentReceiverLight = receiver[0] == "l"
+
+
+receivers = api.getCurrentReceivers()
+currentReceiver = 0
+isCurrentReceiverLight = True
+
+setReceiver(receivers[0])
 
 while True:
     if gpio.isButtonBrightnessUpFlag():
-        apiRepository.dimGroupUp(currentGroup)
+        api.dimGroupUp(currentReceiver)
 
     if gpio.isButtonBrightnessDownFlag():
-        apiRepository.dimGroupDown(currentGroup)
+        api.dimGroupDown(currentReceiver)
 
     if gpio.isButtonToggleOnFlag():
-        apiRepository.toggleGroup(currentGroup)
+        api.toggleGroup(currentReceiver)
 
     if gpio.isButtonConnectionFlag():
-        apiRepository.isHueAvailable()
+        api.isHueAvailable()
+        api.getCurrentReceivers()
 
     if gpio.isButtonPresetOneFlag():
-        apiRepository.applySceneBright(currentGroup)
+        api.applySceneBright(currentReceiver)
 
     if gpio.isButtonPresetTwoFlag():
-        apiRepository.applySceneDimmed(currentGroup)
+        api.applySceneDimmed(currentReceiver)
 
     if gpio.isButtonPresetThreeFlag():
-        apiRepository.applySceneNightlight(currentGroup)
+        api.applySceneNightlight(currentReceiver)
 
     if gpio.isButtonNextFlag():
         continue

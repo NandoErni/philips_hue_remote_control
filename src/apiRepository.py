@@ -3,113 +3,116 @@ import config
 import json
 import time
 
-MAX_BRIGHTNESS = 254
-MIN_BRIGHTNESS = 1
-SYSTEM_LATENCY = 0.05
 
+class APIRepository:
+    MAX_BRIGHTNESS = 254
+    MIN_BRIGHTNESS = 1
+    SYSTEM_LATENCY = 0.05
 
-def getGroups():
-    return httpGet(getApiEndpoint() + config.GROUPS_DIR)
+    def setOnStateToGroup(self, group, state):
+        return self.httpPut(self.getGroupActionEndpoint(group), {'on': state})
 
+    def toggleGroup(self, group):
+        r = self.httpGet(self.getGroupEndpoint(group))
+        state = not r.json()["action"]["on"]
+        return self.setOnStateToGroup(group, state)
 
-def setOnStateToGroup(group, state):
-    return httpPut(getGroupActionEndpoint(group), {'on': state})
+    def setBrightnessToGroup(self, group, brightness):
+        return self.httpPut(self.getGroupActionEndpoint(group),
+                            {'bri': self.getCorrectBrightness(brightness), 'on': True})
 
+    def dimGroupDown(self, group):
+        print("dimming down!")
+        r = self.httpGet(self.getGroupEndpoint(group))
+        brightness = r.json()["action"]["bri"]
 
-def toggleGroup(group):
-    r = httpGet(getGroupEndpoint(group))
-    state = not r.json()["action"]["on"]
-    return setOnStateToGroup(group, state)
+        if brightness == self.MIN_BRIGHTNESS:
+            return None
 
+        return self.setBrightnessToGroup(group, brightness - config.DIM_STEP)
 
-def setBrightnessToGroup(group, brightness):
-    return httpPut(getGroupActionEndpoint(group), {'bri': getCorrectBrightness(brightness), 'on': True})
+    def dimGroupUp(self, group):
+        print("dimming up!")
+        r = self.httpGet(self.getGroupEndpoint(group))
+        brightness = r.json()["action"]["bri"]
 
+        if brightness == self.MAX_BRIGHTNESS:
+            return None
 
-def dimGroupDown(group):
-    print("dimming down!")
-    r = httpGet(getGroupEndpoint(group))
-    brightness = r.json()["action"]["bri"]
+        return self.setBrightnessToGroup(group, brightness + config.DIM_STEP)
 
-    if brightness == MIN_BRIGHTNESS:
-        return None
+    def isHueAvailable(self):
+        r = self.httpGet(self.getApiEndpoint())
 
-    return setBrightnessToGroup(group, brightness - config.DIM_STEP)
+        if r is not None and r.status_code == 200:
+            print("Hue is available!")
+            return True
 
+        print("Hue is not available!")
+        return False
 
-def dimGroupUp(group):
-    print("dimming up!")
-    r = httpGet(getGroupEndpoint(group))
-    brightness = r.json()["action"]["bri"]
+    def applySceneBright(self, group):
+        return self.httpPut(self.getGroupActionEndpoint(group), {'scene': config.SCENE_BRIGHT})
 
-    if brightness == MAX_BRIGHTNESS:
-        return None
+    def applySceneDimmed(self, group):
+        return self.httpPut(self.getGroupActionEndpoint(group), {'scene': config.SCENE_DIMMED})
 
-    return setBrightnessToGroup(group, brightness + config.DIM_STEP)
+    def applySceneNightlight(self, group):
+        return self.httpPut(self.getGroupActionEndpoint(group), {'scene': config.SCENE_NIGHTLIGHT})
 
+    def getCurrentReceivers(self):
+        responseLights = self.httpGet(self.getLightsEndpoint())
+        responseGroups = self.httpGet(self.getGroups())
+        receivers = []
 
-def isHueAvailable():
-    r = httpGet(getApiEndpoint())
+        for i in range(len(responseLights.json())):
+            receivers.append("l" + str(i))
 
-    if r is not None and r.status_code == 200:
-        print("Hue is available!")
-        return True
+        for i in range(len(responseGroups.json())):
+            receivers.append("g" + str(i))
 
-    print("Hue is not available!")
-    return False
+        print("All receivers:")
+        for rec in receivers:
+            print(rec)
 
+        return receivers
 
-def applySceneBright(group):
-    return httpPut(getGroupActionEndpoint(group), {'scene': config.SCENE_BRIGHT})
+    def httpPut(self, url, jsonData):
+        try:
+            r = requests.put(url, json.dumps(jsonData))
+            time.sleep(self.SYSTEM_LATENCY)
+            return r
+        except:
+            return None
 
+    def httpGet(self, url):
+        try:
+            r = requests.get(url)
+            time.sleep(self.SYSTEM_LATENCY)
+            return r
+        except:
+            return None
 
-def applySceneDimmed(group):
-    return httpPut(getGroupActionEndpoint(group), {'scene': config.SCENE_DIMMED})
+    def getApiEndpoint(self):
+        return config.PHILIPS_HUE_URL + 'api/' + config.USERNAME + '/'
 
+    def getGroupActionEndpoint(self, group):
+        return self.getGroupEndpoint(group) + config.GROUP_ACTION_DIR
 
-def applySceneNightlight(group):
-    return httpPut(getGroupActionEndpoint(group), {'scene': config.SCENE_NIGHTLIGHT})
+    def getGroupEndpoint(self, group):
+        return self.getApiEndpoint() + config.GROUPS_DIR + str(group) + '/'
 
+    def getLightsEndpoint(self):
+        return self.getApiEndpoint() + config.LIGHTS_DIR
 
-def httpPut(url, jsonData):
-    try:
-        r = requests.put(url, json.dumps(jsonData))
-        time.sleep(SYSTEM_LATENCY)
-        return r
-    except:
-        return None
+    def getGroups(self):
+        return self.httpGet(self.getApiEndpoint() + config.GROUPS_DIR)
 
+    def getCorrectBrightness(self, brightness):
+        if brightness < self.MIN_BRIGHTNESS:
+            return self.MIN_BRIGHTNESS
 
-def httpGet(url):
-    try:
-        r = requests.get(url)
-        time.sleep(SYSTEM_LATENCY)
-        return r
-    except:
-        return None
+        if brightness > self.MAX_BRIGHTNESS:
+            return self.MAX_BRIGHTNESS
 
-
-def getApiEndpoint():
-    return config.PHILIPS_HUE_URL + 'api/' + config.USERNAME + '/'
-
-
-def getGroupActionEndpoint(group):
-    return getGroupEndpoint(group) + config.GROUP_ACTION_DIR
-
-
-def getGroupEndpoint(group):
-    return getApiEndpoint() + config.GROUPS_DIR + str(group) + '/'
-
-
-def getLightsEndpoint():
-    return getApiEndpoint() + config.LIGHTS_DIR
-
-
-def getCorrectBrightness(brightness):
-    if brightness < MIN_BRIGHTNESS:
-        return MIN_BRIGHTNESS
-
-    if brightness > MAX_BRIGHTNESS:
-        return MAX_BRIGHTNESS
-
-    return brightness
+        return brightness
