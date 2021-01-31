@@ -61,7 +61,7 @@ class GPIORepository:
             if not self.buttonFlags[gpio_button_flag_index]:
                 self.buttonFlags[gpio_button_flag_index] = True
                 print(outputString)
-                time.sleep(0.005)
+                time.sleep(0.01)
                 return True
             else:
                 return False
