@@ -75,10 +75,10 @@ class APIRepository:
         receivers = []
 
         for i in range(len(responseLights.json())):
-            receivers.append("l" + str(i))
+            receivers.append("l" + str(i+1))
 
         for i in range(len(responseGroups.json())):
-            receivers.append("g" + str(i))
+            receivers.append("g" + str(i+1))
 
         print("All receivers:")
         for rec in receivers:
