@@ -3,6 +3,7 @@ import gpioRepository
 import time
 
 print("Remote Control is now starting...")
+SYSTEM_LATENCY = 0.1
 gpio = gpioRepository.GPIORepository()
 api = apiRepository.APIRepository()
 
@@ -39,7 +40,7 @@ currentReceiverIndex = 0
 changeToNextGroup()
 
 while True:
-    time.sleep(0.1)
+    time.sleep(SYSTEM_LATENCY)
     if gpio.isButtonBrightnessUpFlag():
         if isCurrentReceiverLight():
             api.dimLightUp(getCurrentReceiverNumber())
