@@ -42,7 +42,7 @@ def changeToNextGroup():
 
 
 def showCurrentReceiver():
-    display.writeText(receivers[currentReceiverIndex])
+    display.writeText(receivers[currentReceiverIndex].replace("G", "Group ").replace("L", "Light "))
 
 
 receivers = api.getCurrentReceivers()
