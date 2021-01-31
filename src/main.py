@@ -13,7 +13,8 @@ gpio.initGPIO()
 api.isHueAvailable()
 display.initDisplay()
 
-display.writeText("G8")
+display.writeText("Hello :)")
+time.sleep(3)
 
 def changeReceiver(i):
     global currentReceiverIndex, receivers
