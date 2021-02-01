@@ -1,6 +1,6 @@
 import apiRepository
 import gpioRepository
-import I2cRepository
+import i2cRepository
 import time
 import config
 
@@ -8,7 +8,7 @@ print("Remote Control is now starting...")
 SYSTEM_LATENCY = 0.1
 gpio = gpioRepository.GPIORepository()
 api = apiRepository.APIRepository()
-display = I2cRepository.I2cRepository()
+display = i2cRepository.I2cRepository()
 
 gpio.initGPIO()
 api.isHueAvailable()

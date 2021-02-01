@@ -32,3 +32,7 @@ STANDARD_FONT_SIZE = 35
 DISPLAY_WIDTH = 128
 DISPLAY_HEIGHT = 32
 DISPLAY_Y_OFFSET = -10
+
+# wait for internet
+SAMPLE_URL = "github.com"
+DEPLOYMENT_SCRIPT = "/home/pi/testingRemote/deploy_philips_hue_remote_control.sh"
