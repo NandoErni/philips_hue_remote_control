@@ -6,7 +6,7 @@ import subprocess
 display = i2cRepository.I2cRepository()
 
 display.initDisplay()
-display.writeText("Connecting...")
+display.writeText("Starting...")
 
 r = requests.get(config.SAMPLE_URL)
 while not r.status_code == 200:
