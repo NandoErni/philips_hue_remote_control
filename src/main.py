@@ -2,6 +2,7 @@ import apiRepository
 import gpioRepository
 import I2cRepository
 import time
+import config
 
 print("Remote Control is now starting...")
 SYSTEM_LATENCY = 0.1
@@ -14,7 +15,7 @@ api.isHueAvailable()
 display.initDisplay()
 
 display.writeText("Hello :)")
-time.sleep(3)
+time.sleep(2)
 
 
 def changeReceiver(i):
@@ -31,7 +32,7 @@ def getCurrentReceiverNumber():
 
 def isCurrentReceiverLight():
     global receivers
-    return receivers[currentReceiverIndex][0] == "L"
+    return receivers[currentReceiverIndex][0] == config.LIGHT_IDENTIFIER
 
 
 def changeToNextGroup():
@@ -42,7 +43,9 @@ def changeToNextGroup():
 
 
 def showCurrentReceiver():
-    display.writeText(receivers[currentReceiverIndex].replace("G", "Group ").replace("L", "Light "))
+    display.writeText(receivers[currentReceiverIndex]
+                      .replace(config.GROUP_IDENTIFIER, "Group ")
+                      .replace(config.LIGHT_IDENTIFIER, "Light "))
 
 
 receivers = api.getCurrentReceivers()
