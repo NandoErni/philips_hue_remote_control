@@ -20,10 +20,29 @@ You also have to enable I2C via
 pi@raspberry:~$ sudo raspi-config
 ```
 
-### Run the script
+### Run the program
+To run the program execute:
 ```console
-pi@raspberry:~$ python3 ./main.py
+pi@raspberry:~$ python3 src/main.py
 ```
 
+However, if you want to execute a script first, 
+which needs an internet connection, you can run:
+```console
+pi@raspberry:~$ python3 src/waitForConnection.py
+```
+
+This python script will wait until the raspberry pi has access to the internet
+and then it will execute a bash script (which is specified in ```src/config.py```).
+
+This is useful if you want to download the latest version of 
+this program and execute it after the download. The advantage of this method is, 
+that it displays a text while trying to connect to the internet.
+
 ### GPIO Configuration
-The GPIO configuration can be found in the ```config.py``` file
+The GPIO configuration can be found and adjusted in the ```src/config.py``` file
+To make the buttons work, connect them to the GPIO pin and to ground.
+Run the following command to check whether your I2C display is connected correctly:
+```console
+pi@raspberry:~$ i2cdetect -y 1
+```
