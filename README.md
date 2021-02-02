@@ -59,6 +59,16 @@ Also note that when you download the repository,
 you have to adjust all the values in the ```src/config.py``` 
 again (probably via deployment script).
 
+if plan to run the ```src/waitForConnection.py``` script, when the raspberry boots, 
+then you can use crontab for this:
+
+```console
+pi@raspberry:~$ sudo crontab -e
+```
+
+And add the following line:
+```@reboot sudo python3 /home/pi/philips_hue_remote_control/src/waitForConnection.py```
+
 ### GPIO Configuration
 The GPIO configuration can be found and adjusted in the ```src/config.py``` file
 To make the buttons work, connect them to the GPIO pin and to ground.
