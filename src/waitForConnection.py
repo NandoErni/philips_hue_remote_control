@@ -12,7 +12,7 @@ display.writeText("Starting...")
 def waitUntilSuccess():
     while True:
         try:
-            r = requests.get(config.SAMPLE_URL, timeout=5)
+            r = requests.get(config.SAMPLE_URL, timeout=3)
             if r.status_code == 200:
                 return
         except:
