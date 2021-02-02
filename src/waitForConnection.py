@@ -8,11 +8,11 @@ display = i2cRepository.I2cRepository()
 display.initDisplay()
 display.writeText("Starting...")
 
-r = requests.get(config.SAMPLE_URL)
+r = requests.get(config.SAMPLE_URL, timeout=5)
 while not r.status_code == 200:
     try:
-        r = requests.get(config.SAMPLE_URL)
+        r = requests.get(config.SAMPLE_URL, timeout=5)
     except:
         pass
 
-subprocess.call(config.DEPLOYMENT_SCRIPT, shell=True)
+subprocess.call(config.DEPLOYMENT_SCRIPT)

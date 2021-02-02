@@ -34,5 +34,5 @@ DISPLAY_HEIGHT = 32
 DISPLAY_Y_OFFSET = -10
 
 # wait for internet
-SAMPLE_URL = "http://github.com"
+SAMPLE_URL = "https://github.com"
 DEPLOYMENT_SCRIPT = "/home/pi/deploy_philips_hue_remote_control.sh"
