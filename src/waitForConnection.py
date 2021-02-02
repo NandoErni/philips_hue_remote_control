@@ -16,5 +16,5 @@ while not r.status_code == 200:
     except:
         pass
 
-time.sleep(30)
+display.writeText("Success!")
 subprocess.call(config.DEPLOYMENT_SCRIPT)
