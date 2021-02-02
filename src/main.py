@@ -81,7 +81,7 @@ while True:
         else:
             display.writeText("Fail!")
         api.getCurrentReceivers()
-        time.sleep(2)
+        time.sleep(1.5)
         showCurrentReceiver()
 
     if gpio.isButtonPresetOneFlag():
