@@ -15,4 +15,4 @@ while not r.status_code == 200:
     except:
         pass
 
-subprocess.call(config.DEPLOYMENT_SCRIPT)
+subprocess.call(config.DEPLOYMENT_SCRIPT, shell=True)
