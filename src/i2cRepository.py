@@ -30,7 +30,7 @@ class I2cRepository:
 
         self.clear()
         self.draw.text(
-            (self.oled.width / 2 - font_width / 2, config.DISPLAY_Y_OFFSET),
+            (self.oled.width / 2 - font_width / 2 + config.DISPLAY_X_OFFSET, config.DISPLAY_Y_OFFSET),
             text,
             font=self.font,
             fill=255,
