@@ -20,6 +20,23 @@ You also have to enable I2C via
 pi@raspberry:~$ sudo raspi-config
 ```
 
+Download this repository with this command:
+```console
+pi@raspberry:~$ sudo git clone https://github.com/NandoErni/philips_hue_remote_control.git
+```
+
+After you have downloaded the repository, 
+you will need to adjust some values in the ```src/config.py```.
+Especially the following:
+- PHILIPS_HUE_URL   => The IP-Address for the philips hue station
+- USERNAME          => The username for using the philips hue api (The long number). Follow the instructions on this site: https://developers.meethue.com/develop/get-started-2/
+- SCENE_BRIGHT      => The id of the scene for the first preset button
+- SCENE_DIMMED      => The id of the scene for the second preset button
+- SCENE_NIGHTLIGHT  => The id of the scene for the third preset button
+- STANDARD_FONT     => The path to the font used by the display
+- DISPLAY_HEIGHT    => The height of your display
+- DEPLOYMENT_SCRIPT => The deployment script (This is only needed, when you're using the ```src/waitForConnection.py``` script)
+
 ### Run the program
 To run the program execute:
 ```console
@@ -38,6 +55,9 @@ and then it will execute a bash script (which is specified in ```src/config.py``
 This is useful if you want to download the latest version of 
 this program and execute it after the download. The advantage of this method is, 
 that it displays a text while trying to connect to the internet.
+Also note that when you download the repository, 
+you have to adjust all the values in the ```src/config.py``` 
+again (probably via deployment script).
 
 ### GPIO Configuration
 The GPIO configuration can be found and adjusted in the ```src/config.py``` file
