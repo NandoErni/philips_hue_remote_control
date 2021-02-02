@@ -2,6 +2,7 @@ import config
 import i2cRepository
 import requests
 import subprocess
+import time
 
 display = i2cRepository.I2cRepository()
 
@@ -15,4 +16,5 @@ while not r.status_code == 200:
     except:
         pass
 
+time.sleep(30)
 subprocess.call(config.DEPLOYMENT_SCRIPT)
