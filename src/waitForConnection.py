@@ -20,5 +20,5 @@ def waitUntilSuccess():
 
 
 waitUntilSuccess()
-display.writeText("Connected")
+display.writeText("All set")
 subprocess.call(config.DEPLOYMENT_SCRIPT)
