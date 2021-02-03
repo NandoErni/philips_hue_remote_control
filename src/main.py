@@ -80,7 +80,7 @@ while True:
             display.writeText("Success!")
         else:
             display.writeText("Fail!")
-        api.getCurrentReceivers()
+        receivers = api.getCurrentReceivers()
         time.sleep(1.5)
         showCurrentReceiver()
 

@@ -45,16 +45,12 @@ pi@raspberry:~$ python3 src/main.py
 
 However, if you want to execute a script first, 
 which needs an internet connection, you can run:
-```console
-pi@raspberry:~$ python3 src/waitForConnection.py
-```
-
-This python script will wait until the raspberry pi has access to the internet
-and then it will execute a bash script (which is specified in ```src/config.py```).
+```src/waitForConnection.py```.
+This python script will display a text on the display. After the script is 
+finished you can execute your internet script and then execute ```src/main.py```
 
 This is useful if you want to download the latest version of 
-this program and execute it after the download. The advantage of this method is, 
-that it displays a text while trying to connect to the internet.
+this repository and execute it after the download.
 Also note that when you download the repository, 
 you have to adjust all the values in the ```src/config.py``` 
 again (probably via deployment script).
