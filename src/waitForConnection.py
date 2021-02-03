@@ -21,4 +21,4 @@ def waitUntilSuccess():
 
 waitUntilSuccess()
 display.writeText("Updating")
-subprocess.Popen("sudo /bin/sh " + config.DEPLOYMENT_SCRIPT)
+subprocess.call(config.DEPLOYMENT_SCRIPT)
