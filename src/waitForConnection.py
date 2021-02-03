@@ -21,4 +21,4 @@ def waitUntilSuccess():
 
 waitUntilSuccess()
 display.writeText("Updating")
-subprocess.call(config.DEPLOYMENT_SCRIPT)
+subprocess.Popen(config.DEPLOYMENT_SCRIPT)
