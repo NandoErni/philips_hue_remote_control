@@ -36,4 +36,4 @@ DISPLAY_X_OFFSET = -5
 
 # wait for internet
 SAMPLE_URL = "https://github.com"
-DEPLOYMENT_SCRIPT = "/home/pi/deploy_philips_hue_remote_control.sh"
+DEPLOYMENT_SCRIPT = "/home/pi/deploy_philips_hue_remote_control_script.sh"
