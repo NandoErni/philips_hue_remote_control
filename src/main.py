@@ -13,6 +13,8 @@ display = i2cRepository.I2cRepository()
 gpio.initGPIO()
 display.initDisplay()
 
+display.writeText("Connecting...")
+
 while not api.isHueAvailable():
     display.writeText("Hue is not")
     time.sleep(1)
