@@ -11,8 +11,14 @@ api = apiRepository.APIRepository()
 display = i2cRepository.I2cRepository()
 
 gpio.initGPIO()
-api.isHueAvailable()
 display.initDisplay()
+
+while not api.isHueAvailable():
+    display.writeText("Hue is not")
+    time.sleep(1)
+    display.writeText("available")
+    time.sleep(1)
+    display.writeText("retrying...")
 
 display.writeText("Hello :)")
 time.sleep(2)
@@ -32,6 +38,9 @@ def getCurrentReceiverNumber():
 
 def isCurrentReceiverLight():
     global receivers
+    if len(receivers) <= 0:
+        return False
+
     return receivers[currentReceiverIndex][0] == config.LIGHT_IDENTIFIER
 
 
