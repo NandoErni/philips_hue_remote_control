@@ -8,6 +8,7 @@ import adafruit_ssd1306
 class I2cRepository:
     oled = image = draw = font = None
     screenSaverCounter = 0
+    isScreenSaved = False
 
     def initDisplay(self):
         oled_reset = digitalio.DigitalInOut(board.D4)
@@ -47,7 +48,10 @@ class I2cRepository:
         if self.screenSaverCounter < config.DISPLAY_TIMEOUT:
             self.screenSaverCounter += timePerStep
         else:
-            self.clear(True)
+            if not self.isScreenSaved:
+                self.clear(True)
+                self.isScreenSaved = True
 
     def resetScreenSaver(self):
         self.screenSaverCounter = 0
+        self.isScreenSaved = False

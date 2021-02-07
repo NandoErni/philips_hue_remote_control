@@ -66,14 +66,3 @@ class GPIORepository:
         self.buttonFlags[gpio_button_flag_index] = False
         return False
 
-    def isAnyButtonPressed(self):
-        return GPIO.input(config.GPIO_BUTTON_ON) \
-               or GPIO.input(config.GPIO_BUTTON_BRIGHTNESS_UP) \
-               or GPIO.input(config.GPIO_BUTTON_BRIGHTNESS_DOWN) \
-               or GPIO.input(config.GPIO_BUTTON_CONNECTION) \
-               or GPIO.input(config.GPIO_BUTTON_PRESET_ONE) \
-               or GPIO.input(config.GPIO_BUTTON_PRESET_TWO) \
-               or GPIO.input(config.GPIO_BUTTON_PRESET_THREE) \
-               or GPIO.input(config.GPIO_BUTTON_NEXT) \
-               or GPIO.input(config.GPIO_BUTTON_PREVIOUS)
-
