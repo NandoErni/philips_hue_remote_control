@@ -1,6 +1,5 @@
 import RPi.GPIO as GPIO
 import config
-import time
 
 
 class GPIORepository:
@@ -19,7 +18,6 @@ class GPIORepository:
         self.setupBtn(config.GPIO_BUTTON_PRESET_THREE)
         self.setupBtn(config.GPIO_BUTTON_NEXT)
         self.setupBtn(config.GPIO_BUTTON_PREVIOUS)
-        GPIO.setup(config.GPIO_LED_CONNECT, GPIO.OUT)
 
     @staticmethod
     def setupBtn(button):
@@ -68,8 +66,14 @@ class GPIORepository:
         self.buttonFlags[gpio_button_flag_index] = False
         return False
 
-    @staticmethod
-    def turnOnLight(duration):
-        GPIO.output(config.GPIO_LED_CONNECT, GPIO.HIGH)
-        time.sleep(duration)
-        GPIO.output(config.GPIO_LED_CONNECT, GPIO.LOW)
+    def isAnyButtonPressed(self):
+        return GPIO.input(config.GPIO_BUTTON_ON) \
+               or GPIO.input(config.GPIO_BUTTON_BRIGHTNESS_UP) \
+               or GPIO.input(config.GPIO_BUTTON_BRIGHTNESS_DOWN) \
+               or GPIO.input(config.GPIO_BUTTON_CONNECTION) \
+               or GPIO.input(config.GPIO_BUTTON_PRESET_ONE) \
+               or GPIO.input(config.GPIO_BUTTON_PRESET_TWO) \
+               or GPIO.input(config.GPIO_BUTTON_PRESET_THREE) \
+               or GPIO.input(config.GPIO_BUTTON_NEXT) \
+               or GPIO.input(config.GPIO_BUTTON_PREVIOUS)
+
