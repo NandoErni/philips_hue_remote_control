@@ -70,7 +70,7 @@ showCurrentReceiver()
 while True:
     time.sleep(SYSTEM_LATENCY)
     displayTimeoutCounter += SYSTEM_LATENCY
-
+    display.clear()
     if displayTimeoutCounter >= config.DISPLAY_TIMEOUT:
         display.clear()
 
