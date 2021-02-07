@@ -66,13 +66,13 @@ currentReceiverIndex = 0
 
 changeToNextGroup()
 showCurrentReceiver()
-
+display.clear()
 while True:
     time.sleep(SYSTEM_LATENCY)
     displayTimeoutCounter += SYSTEM_LATENCY
-    display.clear()
-    if displayTimeoutCounter >= config.DISPLAY_TIMEOUT:
-        display.clear()
+
+    #if displayTimeoutCounter >= config.DISPLAY_TIMEOUT:
+     #   display.clear()
 
     if gpio.isButtonBrightnessUpFlag():
         if isCurrentReceiverLight():
