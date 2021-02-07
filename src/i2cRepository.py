@@ -24,6 +24,8 @@ class I2cRepository:
 
     def clear(self):
         self.draw.rectangle((0, 0, 300, 300), fill=0)
+        self.oled.image(self.image.rotate(180))
+        self.oled.show()
 
     def writeText(self, text):
         (font_width, font_height) = self.font.getsize(text)
