@@ -7,6 +7,7 @@ import adafruit_ssd1306
 
 class I2cRepository:
     oled = image = draw = font = None
+    screenSaverCounter = 0
 
     def initDisplay(self):
         oled_reset = digitalio.DigitalInOut(board.D4)
@@ -22,15 +23,16 @@ class I2cRepository:
 
         self.font = ImageFont.truetype(config.STANDARD_FONT, config.STANDARD_FONT_SIZE)
 
-    def clear(self):
+    def clear(self, show):
         self.draw.rectangle((0, 0, 300, 300), fill=0)
-        self.oled.image(self.image.rotate(180))
-        self.oled.show()
+        if show:
+            self.oled.image(self.image.rotate(180))
+            self.oled.show()
 
     def writeText(self, text):
         (font_width, font_height) = self.font.getsize(text)
 
-        self.clear()
+        self.clear(False)
         self.draw.text(
             (self.oled.width / 2 - font_width / 2 + config.DISPLAY_X_OFFSET, config.DISPLAY_Y_OFFSET),
             text,
@@ -40,3 +42,12 @@ class I2cRepository:
 
         self.oled.image(self.image.rotate(180))
         self.oled.show()
+
+    def processScreenSaver(self, timePerStep):
+        if self.screenSaverCounter < config.DISPLAY_TIMEOUT:
+            self.screenSaverCounter += timePerStep
+        else:
+            self.clear(True)
+
+    def resetScreenSaver(self):
+        self.screenSaverCounter = 0

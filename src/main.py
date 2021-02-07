@@ -6,7 +6,6 @@ import config
 
 print("Remote Control is now starting...")
 SYSTEM_LATENCY = 0.1
-displayTimeoutCounter = 0
 
 gpio = gpioRepository.GPIORepository()
 api = apiRepository.APIRepository()
@@ -66,31 +65,31 @@ currentReceiverIndex = 0
 
 changeToNextGroup()
 showCurrentReceiver()
-display.clear()
 while True:
     time.sleep(SYSTEM_LATENCY)
-    displayTimeoutCounter += SYSTEM_LATENCY
 
-    #if displayTimeoutCounter >= config.DISPLAY_TIMEOUT:
-     #   display.clear()
+    display.processScreenSaver(SYSTEM_LATENCY)
 
     if gpio.isButtonBrightnessUpFlag():
         if isCurrentReceiverLight():
             api.dimLightUp(getCurrentReceiverNumber())
         else:
             api.dimGroupUp(getCurrentReceiverNumber())
+        continue
 
     if gpio.isButtonBrightnessDownFlag():
         if isCurrentReceiverLight():
             api.dimLightDown(getCurrentReceiverNumber())
         else:
             api.dimGroupDown(getCurrentReceiverNumber())
+        continue
 
     if gpio.isButtonToggleOnFlag():
         if isCurrentReceiverLight():
             api.toggleLight(getCurrentReceiverNumber())
         else:
             api.toggleGroup(getCurrentReceiverNumber())
+        continue
 
     if gpio.isButtonConnectionFlag():
         display.writeText("Checking...")
@@ -101,24 +100,32 @@ while True:
         receivers = api.getCurrentReceivers()
         time.sleep(1.5)
         showCurrentReceiver()
+        continue
 
     if gpio.isButtonPresetOneFlag():
         if isCurrentReceiverLight():
             changeToNextGroup()
         api.applySceneBright(getCurrentReceiverNumber())
+        continue
 
     if gpio.isButtonPresetTwoFlag():
         if isCurrentReceiverLight():
             changeToNextGroup()
         api.applySceneDimmed(getCurrentReceiverNumber())
+        continue
 
     if gpio.isButtonPresetThreeFlag():
         if isCurrentReceiverLight():
             changeToNextGroup()
         api.applySceneNightlight(getCurrentReceiverNumber())
+        continue
 
     if gpio.isButtonNextFlag():
         changeReceiver(1)
+        continue
 
     if gpio.isButtonPreviousFlag():
         changeReceiver(-1)
+        continue
+
+    display.resetScreenSaver()
