@@ -70,28 +70,29 @@ while True:
 
     display.processScreenSaver(SYSTEM_LATENCY)
 
-    if gpio.isAnyButtonPressed():
-        display.resetScreenSaver()
-
     if gpio.isButtonBrightnessUpFlag():
+        display.resetScreenSaver()
         if isCurrentReceiverLight():
             api.dimLightUp(getCurrentReceiverNumber())
         else:
             api.dimGroupUp(getCurrentReceiverNumber())
 
     if gpio.isButtonBrightnessDownFlag():
+        display.resetScreenSaver()
         if isCurrentReceiverLight():
             api.dimLightDown(getCurrentReceiverNumber())
         else:
             api.dimGroupDown(getCurrentReceiverNumber())
 
     if gpio.isButtonToggleOnFlag():
+        display.resetScreenSaver()
         if isCurrentReceiverLight():
             api.toggleLight(getCurrentReceiverNumber())
         else:
             api.toggleGroup(getCurrentReceiverNumber())
 
     if gpio.isButtonConnectionFlag():
+        display.resetScreenSaver()
         display.writeText("Checking...")
         if api.isHueAvailable():
             display.writeText("Success!")
@@ -102,22 +103,27 @@ while True:
         showCurrentReceiver()
 
     if gpio.isButtonPresetOneFlag():
+        display.resetScreenSaver()
         if isCurrentReceiverLight():
             changeToNextGroup()
         api.applySceneBright(getCurrentReceiverNumber())
 
     if gpio.isButtonPresetTwoFlag():
+        display.resetScreenSaver()
         if isCurrentReceiverLight():
             changeToNextGroup()
         api.applySceneDimmed(getCurrentReceiverNumber())
 
     if gpio.isButtonPresetThreeFlag():
+        display.resetScreenSaver()
         if isCurrentReceiverLight():
             changeToNextGroup()
         api.applySceneNightlight(getCurrentReceiverNumber())
 
     if gpio.isButtonNextFlag():
+        display.resetScreenSaver()
         changeReceiver(1)
 
     if gpio.isButtonPreviousFlag():
+        display.resetScreenSaver()
         changeReceiver(-1)
