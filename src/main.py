@@ -5,7 +5,6 @@ import time
 import config
 
 print("Remote Control is now starting...")
-SYSTEM_LATENCY = 0.1
 anyButtonPressed = False
 
 gpio = gpioRepository.GPIORepository()
@@ -68,9 +67,9 @@ changeToNextGroup()
 showCurrentReceiver()
 while True:
     anyButtonPressed = False
-    time.sleep(SYSTEM_LATENCY)
+    time.sleep(config.SYSTEM_LATENCY)
 
-    display.processScreenSaver(SYSTEM_LATENCY)
+    display.processScreenSaver(config.SYSTEM_LATENCY)
 
     if gpio.isButtonBrightnessUpFlag():
         anyButtonPressed = True
