@@ -17,7 +17,7 @@ class APIRepository:
 
     def toggleGroup(self, group):
         r = self.httpGet(self.getGroupEndpoint(group))
-        if r is None:
+        if r is None or not r.ok:
             return None
 
         state = not r.json()["action"]["on"]
@@ -25,7 +25,7 @@ class APIRepository:
 
     def toggleLight(self, light):
         r = self.httpGet(self.getLightEndpoint(light))
-        if r is None:
+        if r is None or not r.ok:
             return None
 
         state = not r.json()["state"]["on"]
@@ -38,7 +38,7 @@ class APIRepository:
     def dimGroupDown(self, group):
         print("dimming down!")
         r = self.httpGet(self.getGroupEndpoint(group))
-        if r is None:
+        if r is None or not r.ok:
             return None
 
         brightness = r.json()["action"]["bri"]
@@ -51,7 +51,7 @@ class APIRepository:
     def dimGroupUp(self, group):
         print("dimming up!")
         r = self.httpGet(self.getGroupEndpoint(group))
-        if r is None:
+        if r is None or not r.ok:
             return None
 
         brightness = r.json()["action"]["bri"]
@@ -68,7 +68,7 @@ class APIRepository:
     def dimLightDown(self, light):
         print("dimming down!")
         r = self.httpGet(self.getLightEndpoint(light))
-        if r is None:
+        if r is None or not r.ok:
             return None
 
         brightness = r.json()["state"]["bri"]
@@ -81,7 +81,7 @@ class APIRepository:
     def dimLightUp(self, light):
         print("dimming up!")
         r = self.httpGet(self.getLightEndpoint(light))
-        if r is None:
+        if r is None or not r.ok:
             return None
 
         brightness = r.json()["state"]["bri"]
@@ -94,7 +94,7 @@ class APIRepository:
     def isHueAvailable(self):
         r = self.httpGet(self.getApiEndpoint())
 
-        if r is not None and r.status_code == 200:
+        if r is not None and r.ok:
             print("Hue is available!")
             return True
 
@@ -111,17 +111,17 @@ class APIRepository:
         return self.httpPut(self.getGroupActionEndpoint(group), {'scene': config.SCENE_NIGHTLIGHT})
 
     def getCurrentReceivers(self):
-        responseLights = self.httpGet(self.getLightsEndpoint())
-        responseGroups = self.httpGet(self.getGroupsEndpoint())
+        rLights = self.httpGet(self.getLightsEndpoint())
+        rGroups = self.httpGet(self.getGroupsEndpoint())
         receivers = []
 
-        if responseLights is not None:
-            for i in range(len(responseLights.json())):
-                receivers.append("L" + str(i+1))
+        if rLights is not None and rLights.ok:
+            for i in range(len(rLights.json())):
+                receivers.append(config.LIGHT_IDENTIFIER + str(i+1))
 
-        if responseGroups is not None:
-            for i in range(len(responseGroups.json())):
-                receivers.append("G" + str(i+1))
+        if rGroups is not None and rGroups.ok:
+            for i in range(len(rGroups.json())):
+                receivers.append(config.GROUP_IDENTIFIER + str(i+1))
 
         print("All receivers:")
         for rec in receivers:
