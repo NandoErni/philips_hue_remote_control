@@ -6,6 +6,7 @@ import config
 
 print("Remote Control is now starting...")
 SYSTEM_LATENCY = 0.1
+anyButtonPressed = False
 
 gpio = gpioRepository.GPIORepository()
 api = apiRepository.APIRepository()
@@ -66,33 +67,34 @@ currentReceiverIndex = 0
 changeToNextGroup()
 showCurrentReceiver()
 while True:
+    anyButtonPressed = False
     time.sleep(SYSTEM_LATENCY)
 
     display.processScreenSaver(SYSTEM_LATENCY)
 
     if gpio.isButtonBrightnessUpFlag():
-        display.resetScreenSaver()
+        anyButtonPressed = True
         if isCurrentReceiverLight():
             api.dimLightUp(getCurrentReceiverNumber())
         else:
             api.dimGroupUp(getCurrentReceiverNumber())
 
     if gpio.isButtonBrightnessDownFlag():
-        display.resetScreenSaver()
+        anyButtonPressed = True
         if isCurrentReceiverLight():
             api.dimLightDown(getCurrentReceiverNumber())
         else:
             api.dimGroupDown(getCurrentReceiverNumber())
 
     if gpio.isButtonToggleOnFlag():
-        display.resetScreenSaver()
+        anyButtonPressed = True
         if isCurrentReceiverLight():
             api.toggleLight(getCurrentReceiverNumber())
         else:
             api.toggleGroup(getCurrentReceiverNumber())
 
     if gpio.isButtonConnectionFlag():
-        display.resetScreenSaver()
+        anyButtonPressed = True
         display.writeText("Checking...")
         if api.isHueAvailable():
             display.writeText("Success!")
@@ -103,27 +105,31 @@ while True:
         showCurrentReceiver()
 
     if gpio.isButtonPresetOneFlag():
-        display.resetScreenSaver()
+        anyButtonPressed = True
         if isCurrentReceiverLight():
             changeToNextGroup()
         api.applySceneBright(getCurrentReceiverNumber())
 
     if gpio.isButtonPresetTwoFlag():
-        display.resetScreenSaver()
+        anyButtonPressed = True
         if isCurrentReceiverLight():
             changeToNextGroup()
         api.applySceneDimmed(getCurrentReceiverNumber())
 
     if gpio.isButtonPresetThreeFlag():
-        display.resetScreenSaver()
+        anyButtonPressed = True
         if isCurrentReceiverLight():
             changeToNextGroup()
         api.applySceneNightlight(getCurrentReceiverNumber())
 
     if gpio.isButtonNextFlag():
-        display.resetScreenSaver()
+        anyButtonPressed = True
         changeReceiver(1)
 
     if gpio.isButtonPreviousFlag():
-        display.resetScreenSaver()
+        anyButtonPressed = True
         changeReceiver(-1)
+
+    if anyButtonPressed:
+        display.resetScreenSaver()
+        showCurrentReceiver()
