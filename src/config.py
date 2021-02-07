@@ -33,6 +33,7 @@ DISPLAY_WIDTH = 128
 DISPLAY_HEIGHT = 32
 DISPLAY_Y_OFFSET = -10
 DISPLAY_X_OFFSET = 0
+DISPLAY_TIMEOUT = 3
 
 # wait for internet
 SAMPLE_URL = "https://github.com"

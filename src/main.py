@@ -6,6 +6,8 @@ import config
 
 print("Remote Control is now starting...")
 SYSTEM_LATENCY = 0.1
+displayTimeoutCounter = 0
+
 gpio = gpioRepository.GPIORepository()
 api = apiRepository.APIRepository()
 display = i2cRepository.I2cRepository()
@@ -67,6 +69,11 @@ showCurrentReceiver()
 
 while True:
     time.sleep(SYSTEM_LATENCY)
+    displayTimeoutCounter += SYSTEM_LATENCY
+
+    if displayTimeoutCounter >= config.DISPLAY_TIMEOUT:
+        display.clear()
+
     if gpio.isButtonBrightnessUpFlag():
         if isCurrentReceiverLight():
             api.dimLightUp(getCurrentReceiverNumber())
